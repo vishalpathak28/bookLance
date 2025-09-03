@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "./courses/context/AuthProvider.jsx";
 import toast from "react-hot-toast";
 
 function Logout() {
