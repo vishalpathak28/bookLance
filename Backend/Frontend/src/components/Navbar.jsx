@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Login from "./Login";
 import { Link } from "react-router-dom";
 import Logout from "./Logout";
-import { useAuth } from "./courses/context/AuthProvider.jsx";
+import { useAuth } from "../courses/context/AuthProvider.jsx";
 
 function Navbar() {
 
