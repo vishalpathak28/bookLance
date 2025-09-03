@@ -7,7 +7,8 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Blog from "./components/Blog";
 import { Toaster } from "react-hot-toast";
-import { useAuth } from "./context/AuthProvider";
+import { useAuth } from "./courses/context/AuthProvider.jsx";
+
 
 const App = () => {
      const [authUser, setAuthUser] = useAuth();
