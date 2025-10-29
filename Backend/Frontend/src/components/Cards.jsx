@@ -25,9 +25,9 @@ function Cards({ item, onPaymentSuccess }) {
         order_id: data.orderId,
         handler: async function (response) {
           console.log("Payment response:", response);
-          alert("Payment Successful!");
+          // ❌ Removed alert
           if (typeof onPaymentSuccess === "function") {
-            onPaymentSuccess(); // ✅ Trigger Course.jsx message
+            onPaymentSuccess(); // ✅ Trigger message display
           }
         },
         prefill: {
