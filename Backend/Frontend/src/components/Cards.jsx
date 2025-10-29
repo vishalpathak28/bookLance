@@ -25,7 +25,7 @@ function Cards({ item, onPaymentSuccess }) {
         order_id: data.orderId,
         handler: async (response) => {
           console.log(response);
-          if (onPaymentSuccess) onPaymentSuccess(); // ✅ trigger parent
+          if (onPaymentSuccess) onPaymentSuccess(); // ✅ trigger parent success box
         },
         prefill: {
           name: "Vishal Pathak",
