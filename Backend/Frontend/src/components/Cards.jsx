@@ -23,11 +23,10 @@ function Cards({ item, onPaymentSuccess }) {
         name: "BookCity Store",
         description: `Payment for ${item.name}`,
         order_id: data.orderId,
-        handler: async function (response) {
+        handler: function (response) {
           console.log("Payment response:", response);
-          // ❌ Removed alert
           if (typeof onPaymentSuccess === "function") {
-            onPaymentSuccess(); // ✅ Trigger message display
+            onPaymentSuccess(); // ✅ Triggers message in parent
           }
         },
         prefill: {
