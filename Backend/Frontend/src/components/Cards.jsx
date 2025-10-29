@@ -23,9 +23,12 @@ function Cards({ item, onPaymentSuccess }) {
         name: "BookCity Store",
         description: `Payment for ${item.name}`,
         order_id: data.orderId,
-        handler: async (response) => {
-          console.log(response);
-          if (onPaymentSuccess) onPaymentSuccess(); // ✅ trigger parent success box
+        handler: async function (response) {
+          console.log("Payment response:", response);
+          alert("Payment Successful!");
+          if (typeof onPaymentSuccess === "function") {
+            onPaymentSuccess(); // ✅ Trigger Course.jsx message
+          }
         },
         prefill: {
           name: "Vishal Pathak",
@@ -36,8 +39,13 @@ function Cards({ item, onPaymentSuccess }) {
 
       const rzp = new window.Razorpay(options);
       rzp.open();
+
+      rzp.on("payment.failed", function (response) {
+        alert("Payment Failed. Try again!");
+        console.error(response.error);
+      });
     } catch (err) {
-      console.error(err);
+      console.error("Error in handleBuyNow:", err);
       alert("Payment Failed. Try again!");
     }
   };
