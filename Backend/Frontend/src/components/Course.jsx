@@ -24,6 +24,10 @@ function Course() {
     setPaymentDone(true);
   };
 
+  const handleClose = () => {
+    setPaymentDone(false);
+  };
+
   return (
     <div className="pt-20 max-w-screen-2xl container mx-auto md:px-20 px-4 bg-white dark:bg-slate-900 min-h-screen">
       {!paymentDone ? (
@@ -57,23 +61,35 @@ function Course() {
           </div>
         </>
       ) : (
-        // ✅ Same message box style as Home Page
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-2xl border border-pink-500 text-center max-w-sm mx-auto">
-            <h2 className="text-2xl font-semibold text-pink-500 mb-4">
+        // ✅ Exact same success box with blur, bold text, close button
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50">
+          <div className="relative bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-2xl border border-pink-500 text-center max-w-sm mx-auto animate-fadeIn">
+            {/* Close Button */}
+            <button
+              onClick={handleClose}
+              className="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl"
+            >
+              ×
+            </button>
+
+            <h2 className="text-2xl font-semibold text-pink-500 mb-3">
               ✅ Payment Successful!
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-3">
+            <p className="text-gray-700 dark:text-gray-300 mb-2 font-semibold">
+              Next Step:
+            </p>
+            <p className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
               Please send your payment screenshot and address on WhatsApp:
             </p>
-            <p className="text-lg font-semibold text-green-600 mb-4">
+            <p className="text-green-600 font-bold text-lg mb-5">
               8630198478
             </p>
+
             <a
               href="https://wa.me/918630198478"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center bg-green-500 text-white px-5 py-2.5 rounded-full hover:bg-green-600 transition duration-300"
+              className="flex items-center justify-center bg-green-500 text-white px-6 py-2.5 rounded-full hover:bg-green-600 transition duration-300"
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
