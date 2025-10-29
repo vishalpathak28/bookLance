@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -8,6 +8,7 @@ import Cards from "./Cards";
 function Freebook() {
   const [book, setBook] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
+  const sliderRef = useRef(null); // ✅ Ref for reinitializing slick
 
   useEffect(() => {
     const getBook = async () => {
@@ -15,6 +16,13 @@ function Freebook() {
         const res = await axios.get("/book");
         const data = res.data.filter((data) => data.category === "Free");
         setBook(data);
+
+        // ✅ Small delay, then reinitialize the slider (fixes mobile blank issue)
+        setTimeout(() => {
+          if (sliderRef.current) {
+            sliderRef.current.slickGoTo(0);
+          }
+        }, 300);
       } catch (error) {
         console.log(error);
       }
@@ -48,15 +56,19 @@ function Freebook() {
         </div>
 
         <div>
-          <Slider {...settings}>
-            {book.map((item) => (
-              <Cards
-                item={item}
-                key={item.id}
-                onPaymentSuccess={() => setShowMessage(true)} // ✅ trigger popup
-              />
-            ))}
-          </Slider>
+          {book.length === 0 ? (
+            <p className="text-center py-10 text-gray-500">Loading books...</p>
+          ) : (
+            <Slider ref={sliderRef} {...settings}>
+              {book.map((item) => (
+                <Cards
+                  item={item}
+                  key={item.id}
+                  onPaymentSuccess={() => setShowMessage(true)} // ✅ trigger popup
+                />
+              ))}
+            </Slider>
+          )}
         </div>
       </div>
 
