@@ -57,27 +57,28 @@ function Course() {
           </div>
         </>
       ) : (
+        // ✅ Same message box style as Home Page
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg text-center max-w-md mx-auto border border-pink-500">
+          <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-2xl border border-pink-500 text-center max-w-sm mx-auto">
             <h2 className="text-2xl font-semibold text-pink-500 mb-4">
               ✅ Payment Successful!
             </h2>
-            <p className="text-base mb-4 text-gray-700 dark:text-gray-300">
+            <p className="text-gray-700 dark:text-gray-300 mb-3">
               Please send your payment screenshot and address on WhatsApp:
             </p>
-            <p className="font-semibold mb-4 text-lg text-green-600">
+            <p className="text-lg font-semibold text-green-600 mb-4">
               8630198478
             </p>
             <a
               href="https://wa.me/918630198478"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center bg-green-500 text-white px-6 py-3 rounded-full text-lg hover:bg-green-600 transition duration-300"
+              className="flex items-center justify-center bg-green-500 text-white px-5 py-2.5 rounded-full hover:bg-green-600 transition duration-300"
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
                 alt="WhatsApp"
-                className="w-6 h-6 mr-2"
+                className="w-5 h-5 mr-2"
               />
               Chat on WhatsApp
             </a>
