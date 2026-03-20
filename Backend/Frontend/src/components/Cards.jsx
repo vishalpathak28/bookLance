@@ -20,7 +20,7 @@ function Cards({ item, onPaymentSuccess }) {
         key: data.key,
         amount: data.amount,
         currency: data.currency,
-        name: "BookCity Store",
+        name: "Booklance",
         description: `Payment for ${item.name}`,
         order_id: data.orderId,
         handler: function (response) {
