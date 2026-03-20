@@ -6,35 +6,37 @@ import path from "path";
 
 import bookRoute from "./route/book.route.js";
 import userRoute from "./route/user.route.js";
-import paymentRoute from "./route/payment.route.js"; // ✅ NEW IMPORT
+import paymentRoute from "./route/payment.route.js";
+
+dotenv.config(); // load env first
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
-
-dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 
-// connect to mongoDB
-try {
-  mongoose.connect(URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  console.log("Connected to mongoDB");
-} catch (error) {
-  console.log("Error: ", error);
-}
+// Async function to connect to MongoDB
+const connectDB = async () => {
+  try {
+    await mongoose.connect(URI);
+    console.log("✅ Connected to MongoDB");
+  } catch (error) {
+    console.error("❌ MongoDB connection error:", error);
+    // Retry after 5 seconds instead of crashing
+    setTimeout(connectDB, 5000);
+  }
+};
 
-// defining routes
+connectDB(); // initialize DB connection
+
+// Define routes
 app.use("/book", bookRoute);
 app.use("/user", userRoute);
-app.use("/payment", paymentRoute); // ⚙️ keep this same
+app.use("/payment", paymentRoute);
 
-// ✅ Add this middleware to ensure .env is loaded before paymentRoute
+// Warn if Razorpay keys missing
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   console.error("❌ Razorpay keys missing! Check your .env file.");
 }
@@ -43,12 +45,15 @@ if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
 if (process.env.NODE_ENV === "production") {
   const dirPath = path.resolve();
   app.use(express.static(path.join(dirPath, "Frontend/dist")));
-
-  // Use a regex to catch all paths
   app.get(/^\/.*$/, (req, res) => {
     res.sendFile(path.join(dirPath, "Frontend/dist/index.html"));
   });
 }
+
+// Catch unhandled promise rejections globally (prevents exit)
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
